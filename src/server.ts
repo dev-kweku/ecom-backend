@@ -6,3 +6,4 @@ app.listen(port,(err)=>{
     if(err) throw new Error("server is asleep")
         console.log(`server is up on http://localhost:${port}/`)
 })
+                                        

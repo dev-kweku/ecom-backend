@@ -19,8 +19,8 @@ model User{
   email String @unique
   password  String?
   name  String
-  role  //get role  @default(USER)//user is enum
-  provider  AuthProvider @default(CREDENTIALS) //enum
+  role  Role  @default(USER)
+  provider  AuthProvider @default(CREDENTIALS) 
   emailVerified Boolean @default(false)
   refreshToken String?
   createdAt DateTime @default(now())
@@ -101,4 +101,73 @@ model Order{
   address Address? @relation(fields:[addressId],references:[id])
   addressId String?
   createdAt DateTime @default(now())
+}
+
+model orderItem{
+  id String @id @default(uuid())
+  order Order @relation(fields:[orderId],references:[id])
+  orderId String 
+  product Product @relation(fields:[productId],references:[id])
+  productId String
+  quantity Int 
+  price Decimal @db.Decimal(10,2)
+}
+
+enum OrderStatus{
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+
+model Payment{
+  id String @id @default(uuid())
+  order Order @relation(fields:[orderId],references:[id])
+  orderId String @unique
+  amount Decimal @db.Decimal(10,2)
+  status PaymentStatus @default(PENDING)
+  paymentMethod String
+  paymentId String
+  createdAt DateTime @degault(now())
+}
+
+enum PaymentStatus{
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+
+model Address{
+  id String @id @default(uuid())
+  user User @relation(fields:[userId],references:[id])
+  userId String
+  fullName String
+  phone String
+  street String
+  city String
+  state String
+  postalCode String
+  country String
+  isDefault boolean @default(false)
+}
+
+model UserCoupon{
+  id String @id @default(uuid())
+  code String @unique
+  discount Int
+  expiresAt DateTime
+  users UserCoupon[]
+}
+
+model UserCoupon{
+  id String @id @default(uuid())
+  user User @relation(fields:[userId],references:[id])
+  userId String
+  coupon Coupon @relation(fields:[couponId],references:[id])
+  couponId String
+  used Boolean @default(false)
 }
