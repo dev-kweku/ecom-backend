@@ -30,7 +30,7 @@ model User{
   cart Cart?
   addresses Address[]
   coupon  UserCoupon[]
-}
+}     
 
 enum Role{
   USER
@@ -83,5 +83,22 @@ model Cart{
 
 model CartItem{
   id String @id @default(uuid())
-  cart Cart @relation(fields:[cartId],references)
+  cart Cart @relation(fields:[cartId],references:[id])
+  cartId String
+  product Product @relation(fields:[productId],references:[id])
+  productId String
+  quantity Int  @default(1)
+}
+
+model Order{
+  id String @id @default(uuid())
+  user User @relation(fields:[userId,references:[id]])
+  userId String
+  Items orderItem[]
+  total Decimal @db.Decimal(10,2)
+  status orderStatus @default(PENDING)
+  payment Payment?
+  address Address? @relation(fields:[addressId],references:[id])
+  addressId String?
+  createdAt DateTime @default(now())
 }
