@@ -1,7 +1,7 @@
 // using schema on zod
 import {z} from "zod"
 
-export const registrationSchema=z.object({
+export const SignUpSchema=z.object({
     email:z.string().email(),
     name:z.string().min(1),
     password:z.string().min(6)
@@ -13,5 +13,5 @@ export const loginSchema=z.object({
 })
 
 
-export type RegistrationInput=z.infer<typeof registrationSchema>;
+export type SignUpSchemaInput=z.infer<typeof SignUpSchema>;
 export type LoginInput=z.infer<typeof loginSchema>;
