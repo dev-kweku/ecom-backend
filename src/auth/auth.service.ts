@@ -3,11 +3,25 @@ import {PrismaClient} from "@prisma/client"
 import { hashPassword,comparePassword } from "@common/utils/hash"
 import { signAccessToken,signRefresgToken } from "@common/utils/jwt"
 // import { email } from "zod";
+import jwt from "jsonwebtoken";
 
 
 const prisma=new PrismaClient();
+const JWT_SECRET=process.env.JWT_SECRET!;
+const JWT_EXPIRESIN='7d';
+const REFRESH_JWT_TOKEN='10d';
 
 export class AuthService{
+    static generateToken(userId:string) {
+            const accessToken=jwt.sign({sub:userId},JWT_SECRET,{
+                expiresIn:JWT_EXPIRESIN,
+            })
+            const refreshToken=jwt.sign({sub:userId},JWT_SECRET,{
+                expiresIn:REFRESH_JWT_TOKEN,
+            })
+
+            return {accessToken,refreshToken};
+    }
     static async signup(data:{email:string,password:string,name:string}){
         const userExist=await prisma.user.findUnique({where:{email:data.email}})
         if(userExist) throw new Error("user already exists")
