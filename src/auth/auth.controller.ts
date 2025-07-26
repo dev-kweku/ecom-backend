@@ -88,6 +88,22 @@ export class AuthController{
         return res.status(401).json({ message: 'Refresh token failed', error: err });
         }
     }
+// @logout
+    static async logout(req:Request,res:Response){
+        try{
+            const userId=req.user?.id;
+            if(!userId) return res.status(404).json({message:"unathorized"})
+                await prisma.user.update({
+                    where:{id:userId},
+                    data:{refreshToken:null}
+                })
+                return res.status(200).json({message:"Logged out successfully"})
+        }catch(err:any){
+            return res.status(500).json({message:'Loggedout failed'})
+    
+        }
+    
+    }
     
 
 }
