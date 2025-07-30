@@ -40,7 +40,8 @@ model Product {
   id          String         @id @default(uuid())
   name        String
   description String
-  price       Decimal        @db.Decimal(10, 2)
+  slug        String         @unique
+  price       Float
   stock       Int
   category    Category       @relation(fields: [categoryId], references: [id])
   categoryId  String
@@ -53,9 +54,11 @@ model Product {
 }
 
 model Category {
-  id       String    @id @default(uuid())
-  name     String    @unique
-  products Product[]
+  id        String    @id @default(uuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model ProductImage {
