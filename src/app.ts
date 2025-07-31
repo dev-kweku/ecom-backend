@@ -4,7 +4,7 @@ import helmet from "helmet"
 import cookieParser from "cookie-parser"
 import {config} from "dotenv"
 import productRoute from "products/product.routes"
-import CategoryRouter from "carts/category.routes"
+import CategoryRouter from "category/category.routes"
 
 config();
 const app=express()
