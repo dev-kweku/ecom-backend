@@ -14,4 +14,5 @@ router.post('/',protect,validate(CreateProductSchema),ProductController.create);
 router.put('/:id',protect,validate(updateProductSchema),ProductController.update);
 router.delete('/:id',protect,ProductController.delete)
 
-export default router;
+const productRoute=router;
+export default productRoute;

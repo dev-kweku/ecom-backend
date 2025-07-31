@@ -26,6 +26,5 @@ router.get('/admin/panel',protect,restrictTo('ADMIN'),(req,res)=>{
  */
 
   router.post('/refresh-token',AuthController.refreshToken)
-
 export default router;
 
