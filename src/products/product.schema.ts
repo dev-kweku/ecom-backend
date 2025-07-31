@@ -7,6 +7,7 @@ export const CreateProductSchema = z.object({
     price: z.number().positive(),
     categoryId: z.string().uuid(),
     image: z.string().optional(),
+    stock:z.number().positive(),
 });
 
 

@@ -5,7 +5,7 @@
 
     export class ProductService {
     static async create(data: CreateProductInput) {
-        return prisma.product.create({ data});
+        return prisma.product.create({data})
     }
 
     static async update(id: string, data: UpdateProductInput) {
