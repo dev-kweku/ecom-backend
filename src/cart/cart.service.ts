@@ -28,7 +28,6 @@
 
         return prisma.cartItem.create({
             data: {
-            // @ts-ignore 
             userId,
             cartId: cart.id,
             productId,
@@ -38,5 +37,23 @@
             product: true
             }
         });
+    },
+
+    getCart:async(userId:string)=>{
+        return prisma.cartItem.findMany(
+            {
+                where:{userId},
+                include:{product:true}
+            })
+    },
+    updateQuantity:async(id:string,quantity:number)=>{
+        return prisma.cartItem.update({
+            where:{id},
+            data:{quantity},
+        })
+    },
+
+    removeFromCart:async(id:string)=>{
+        return prisma.cartItem.delete({where:{id}})
     }
     };
