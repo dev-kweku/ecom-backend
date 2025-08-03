@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import {config} from "dotenv"
 import productRoute from "products/product.routes"
 import CategoryRouter from "category/category.routes"
+import OrderRouter from "orders/order.routes"
 
 config();
 const app=express()
@@ -19,5 +20,6 @@ app.get('/ping',(_,res)=>res.send('pong'))
 
 app.use('/api/products',productRoute);
 app.use('/categories',CategoryRouter);
+app.use('/orders',OrderRouter)
 
 export default app;
