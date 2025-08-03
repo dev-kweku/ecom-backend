@@ -5,14 +5,23 @@ import {PrismaClient} from "@prisma/client"
 const JWT_SECRET=process.env.JWT_SECRET;
 const prisma=new PrismaClient()
 
-export interface AuthenticatedRequest extends Request{
-    user?:{
-        id:string;
-        role:string;
-        email:string;
-    };
-}
+// export interface AuthenticatedRequest extends Request{
+//     user?:{
+//         id:string;
+//         role:"USER|ADMIN";
+//         email:string;
+//     };
+// }
 
+type AuthUser={
+    id:string;
+    role:"USER"|"ADMIN";
+    email:string;
+};
+
+export interface AuthenticatedRequest extends Request{
+    user?:AuthUser;
+}
 
 
 export const isAuthenticated=async(
