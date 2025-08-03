@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { CategoryController } from "./category.controller";
-
+import { isAuthenticated } from "middleware/auth";
 const router=Router()
+
+
+// not needed here!
+// router.use(isAuthenticated)
 
 router.post('/',CategoryController.create)
 router.get('/',CategoryController.getAll)
