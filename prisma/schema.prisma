@@ -24,6 +24,7 @@ model User {
   addresses Address[]
   coupons   UserCoupon[]
   CartItem  CartItem[]
+  Review    Review[]
 }
 
 enum Role {
@@ -52,6 +53,7 @@ model Product {
 
   orderItems OrderItem[]
   CartItem   CartItem[]
+  Review     Review[]
 }
 
 model Category {
@@ -64,11 +66,11 @@ model Category {
 }
 
 model ProductImage {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   url       String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
   productId String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Cart {
@@ -172,4 +174,16 @@ model UserCoupon {
   coupon   Coupon  @relation(fields: [couponId], references: [id])
   couponId String
   used     Boolean @default(false)
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  comment   String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
