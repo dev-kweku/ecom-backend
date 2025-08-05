@@ -16,6 +16,12 @@ export const ReviewController={
         }catch(err:any){
             res.status(400).json({error:err.message});
         }
+    },
+
+    getForProduct:async(req:Request,res:Response)=>{
+        const {productId}=req.params;
+        const review=await ReviewService.getForProduct(productId);
+        return res.json(review)
     }
 }
 
